@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Fundamentals Training - Week 1</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+        }
+        
+        .section h2 {
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        /* CSS Rule Structure Examples */
+        .rule-example {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .rule-example .comment {
+            color: #68d391;
+            font-style: italic;
+        }
+        
+        .rule-example .selector {
+            color: #f6e05e;
+            font-weight: bold;
+        }
+        
+        .rule-example .property {
+            color: #63b3ed;
+        }
+        
+        .rule-example .value {
+            color: #fbb6ce;
+        }
+        
+        /* Selector Examples */
+        .demo-box {
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        
+        /* Element selector */
+        p {
+            color: #333;
+        }
+        
+        /* Class selector */
+        .highlighted {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 8px;
+            border-radius: 3px;
+        }
+        
+        .warning {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 8px;
+            border-radius: 3px;
+        }
+        
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 8px;
+            border-radius: 3px;
+        }
+        
+        /* ID selector */
+        #unique-element {
+            background-color: #e3f2fd;
+            color: #0d47a1;
+            font-weight: bold;
+            padding: 12px;
+            border-left: 4px solid #2196f3;
+        }
+        
+        /* Specificity Examples */
+        .specificity-demo {
+            color: red; /* This will be overridden */
+        }
+        
+        .specificity-demo.more-specific {
+            color: blue; /* This wins - higher specificity */
+        }
+        
+        .specificity-demo {
+            color: green !important; /* This wins - !important */
+        }
+        
+        /* Cascade Examples */
+        .cascade-demo {
+            color: purple;
+            font-size: 16px;
+        }
+        
+        .cascade-demo {
+            color: orange; /* This color wins - later in cascade */
+            font-weight: bold;
+        }
+        
+        /* Interactive Examples */
+        .interactive-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .style-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        .style-button:hover {
+            background-color: #0056b3;
+        }
+        
+        .target-element {
+            background-color: #e9ecef;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+        
+        /* States that will be applied via JavaScript */
+        .red-text { color: red; }
+        .blue-text { color: blue; }
+        .green-text { color: green; }
+        .large-text { font-size: 24px; }
+        .bold-text { font-weight: bold; }
+        .italic-text { font-style: italic; }
+        
+        /* Common Mistakes Section */
+        .mistake-example {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .mistake-bad, .mistake-good {
+            flex: 1;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        
+        .mistake-bad {
+            background-color: #ffebee;
+            border: 1px solid #f44336;
+        }
+        
+        .mistake-good {
+            background-color: #e8f5e8;
+            border: 1px solid #4caf50;
+        }
+        
+        .code-sample {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 10px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+        
+        /* Specificity Calculator */
+        .specificity-calculator {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .specificity-input {
+            margin: 10px 0;
+        }
+        
+        .specificity-input input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        /* Unit Converter Styles */
+        .unit-converter {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .unit-converter input {
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        
+        .unit-converter label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CSS Fundamentals Training - Week 1</h1>
+        
+        <div class="section">
+            <h2>1. CSS Rule Structure</h2>
+            <p>Every CSS rule follows the same pattern:</p>
+            
+            <div class="rule-example">
+<span class="comment">/* selector { property: value; } */</span>
+<span class="selector">h1</span> {
+    <span class="property">color</span>: <span class="value">blue</span>;
+    <span class="property">font-size</span>: <span class="value">24px</span>;
+}
+            </div>
+            
+            <div class="demo-box">
+                <h3>Parts of a CSS Rule:</h3>
+                <ul>
+                    <li><strong>Selector:</strong> What element(s) to style</li>
+                    <li><strong>Property:</strong> What aspect to change (color, size, etc.)</li>
+                    <li><strong>Value:</strong> How to change it</li>
+                    <li><strong>Declaration:</strong> property + value pair</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>2. Types of Selectors</h2>
+            
+            <div class="rule-example">
+<span class="comment">/* Element Selector - targets all &lt;p&gt; tags */</span>
+<span class="selector">p</span> { <span class="property">color</span>: <span class="value">black</span>; }
+
+<span class="comment">/* Class Selector - targets class="highlighted" */</span>
+<span class="selector">.highlighted</span> { <span class="property">background-color</span>: <span class="value">yellow</span>; }
+
+<span class="comment">/* ID Selector - targets id="unique-element" */</span>
+<span class="selector">#unique-element</span> { <span class="property">font-weight</span>: <span class="value">bold</span>; }
+            </div>
+            
+            <div class="demo-box">
+                <p>This paragraph is styled by the element selector.</p>
+                <p class="highlighted">This paragraph has the "highlighted" class.</p>
+                <p class="warning">This paragraph has the "warning" class.</p>
+                <p class="success">This paragraph has the "success" class.</p>
+                <div id="unique-element">This div has the ID "unique-element".</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>3. Specificity - Why Some Styles Don't Work</h2>
+            <p>When multiple rules target the same element, specificity determines which wins:</p>
+            
+            <div class="rule-example">
+<span class="comment">/* Specificity values (high to low): */</span>
+<span class="comment">/* !important      = 10,000 */</span>
+<span class="comment">/* ID selector     = 100 */</span>
+<span class="comment">/* Class selector  = 10 */</span>
+<span class="comment">/* Element selector = 1 */</span>
+            </div>
+            
+            <div class="demo-box">
+                <div class="specificity-demo more-specific">
+                    This text demonstrates specificity rules.
+                    <br>Check the CSS to see which rule wins!
+                </div>
+            </div>
+            
+            <div class="specificity-calculator">
+                <h4>Specificity Calculator</h4>
+                <p>Enter a CSS selector to see its specificity:</p>
+                <div class="specificity-input">
+                    <input type="text" id="selectorInput" placeholder="Enter selector (e.g., .class #id p)" value=".class #id p">
+                </div>
+                <div class="specificity-result" id="specificityResult">
+                    Specificity: <span id="specificityValue">0,1,1,1</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>4. The Cascade - Order Matters</h2>
+            <p>When specificity is equal, the last rule wins:</p>
+            
+            <div class="rule-example">
+<span class="selector">.cascade-demo</span> {
+    <span class="property">color</span>: <span class="value">purple</span>;
+    <span class="property">font-size</span>: <span class="value">16px</span>;
+}
+
+<span class="selector">.cascade-demo</span> {
+    <span class="property">color</span>: <span class="value">orange</span>; <span class="comment">/* This wins - later in cascade */</span>
+    <span class="property">font-weight</span>: <span class="value">bold</span>;
+}
+            </div>
+            
+            <div class="demo-box">
+                <div class="cascade-demo">
+                    This text shows how the cascade works.
+                    The color is orange (not purple) because it appears later in the CSS.
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>5. Interactive Demo</h2>
+            <p>Click the buttons to apply different styles and see how they work:</p>
+            
+            <div class="interactive-section">
+                <div class="target-element" id="targetElement">
+                    This element will change based on the buttons you click.
+                    Right-click and inspect to see the classes being added/removed.
+                </div>
+                
+                <div>
+                    <button class="style-button" onclick="applyStyle('red-text')">Make Red</button>
+                    <button class="style-button" onclick="applyStyle('blue-text')">Make Blue</button>
+                    <button class="style-button" onclick="applyStyle('green-text')">Make Green</button>
+                    <button class="style-button" onclick="applyStyle('large-text')">Make Large</button>
+                    <button class="style-button" onclick="applyStyle('bold-text')">Make Bold</button>
+                    <button class="style-button" onclick="applyStyle('italic-text')">Make Italic</button>
+                    <button class="style-button" onclick="resetStyles()">Reset</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>6. Common Mistakes</h2>
+            
+            <div class="mistake-example">
+                <div class="mistake-bad">
+                    <h4>❌ Bad: Overusing !important</h4>
+                    <div class="code-sample">
+.my-class {
+    color: red !important;
+    font-size: 20px !important;
+    margin: 10px !important;
+}
+                    </div>
+                    <p>Makes CSS hard to maintain and override.</p>
+                </div>
+                
+                <div class="mistake-good">
+                    <h4>✅ Good: Understanding specificity</h4>
+                    <div class="code-sample">
+.sidebar .my-class {
+    color: red;
+    font-size: 20px;
+    margin: 10px;
+}
+                    </div>
+                    <p>Use more specific selectors instead.</p>
+                </div>
+            </div>
+            
+            <div class="mistake-example">
+                <div class="mistake-bad">
+                    <h4>❌ Bad: Mixing selectors</h4>
+                    <div class="code-sample">
+/* Don't do this */
+div.class#id {
+    color: blue;
+}
+                    </div>
+                    <p>Overly specific and confusing.</p>
+                </div>
+                
+                <div class="mistake-good">
+                    <h4>✅ Good: Use classes consistently</h4>
+                    <div class="code-sample">
+/* Do this instead */
+.navigation-item {
+    color: blue;
+}
+                    </div>
+                    <p>Clear, reusable, and maintainable.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>7. CSS Units - Getting Sizes Right</h2>
+            <p>Choosing the right unit is crucial for professional-looking designs:</p>
+            
+            <div class="rule-example">
+<span class="comment">/* Absolute Units */</span>
+<span class="selector">.pixel-text</span> { <span class="property">font-size</span>: <span class="value">16px</span>; } <span class="comment">/* Fixed size */</span>
+
+<span class="comment">/* Relative Units */</span>
+<span class="selector">.rem-text</span> { <span class="property">font-size</span>: <span class="value">1rem</span>; } <span class="comment">/* Relative to root font-size */</span>
+<span class="selector">.em-text</span> { <span class="property">font-size</span>: <span class="value">1.2em</span>; } <span class="comment">/* Relative to parent font-size */</span>
+<span class="selector">.percent-width</span> { <span class="property">width</span>: <span class="value">50%</span>; } <span class="comment">/* Relative to parent width */</span>
+            </div>
+            
+            <div class="interactive-section">
+                <h4>Unit Comparison Demo</h4>
+                <div style="font-size: 20px; border: 2px solid #ddd; padding: 15px; margin: 10px 0;">
+                    <div style="font-size: 16px;">16px text (absolute)</div>
+                    <div style="font-size: 1rem;">1rem text (relative to root)</div>
+                    <div style="font-size: 1em;">1em text (relative to parent)</div>
+                    <div style="font-size: 0.8em;">0.8em text (smaller relative)</div>
+                </div>
+                
+                <h4>When to Use Each Unit:</h4>
+                <div class="demo-box">
+                    <div class="mistake-example">
+                        <div style="flex: 1;">
+                            <h5>👍 Use px for:</h5>
+                            <ul>
+                                <li>Borders (1px, 2px)</li>
+                                <li>Small fixed spacing (1px gaps)</li>
+                                <li>When you need exact pixel control</li>
+                            </ul>
+                        </div>
+                        <div style="flex: 1;">
+                            <h5>👍 Use rem for:</h5>
+                            <ul>
+                                <li>Font sizes</li>
+                                <li>Component spacing</li>
+                                <li>Consistent scaling across site</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mistake-example">
+                        <div style="flex: 1;">
+                            <h5>👍 Use % for:</h5>
+                            <ul>
+                                <li>Container widths</li>
+                                <li>Responsive layouts</li>
+                                <li>Proportional sizing</li>
+                            </ul>
+                        </div>
+                        <div style="flex: 1;">
+                            <h5>⚠️ Use em carefully for:</h5>
+                            <ul>
+                                <li>Spacing within components</li>
+                                <li>When you want scaling with text</li>
+                                <li>Can compound unexpectedly</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="unit-converter">
+                    <h4>Unit Converter Tool</h4>
+                    <p>Base font size: <span id="baseFontSize">16px</span></p>
+                    <div style="display: flex; gap: 20px; margin: 10px 0;">
+                        <div>
+                            <label>Pixels:</label>
+                            <input type="number" id="pixelInput" value="16" style="width: 80px;">
+                        </div>
+                        <div>
+                            <label>Rem:</label>
+                            <input type="number" id="remInput" value="1" step="0.1" style="width: 80px;">
+                        </div>
+                        <div>
+                            <label>Em:</label>
+                            <input type="number" id="emInput" value="1" step="0.1" style="width: 80px;">
+                        </div>
+                    </div>
+                    <div id="unitPreview" style="padding: 10px; border: 1px solid #ddd; margin: 10px 0; font-size: 16px;">
+                        Preview text at current size
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>8. Key Takeaways</h2>
+            <ul>
+                <li><strong>CSS rules:</strong> selector { property: value; }</li>
+                <li><strong>Specificity order:</strong> !important > ID > Class > Element</li>
+                <li><strong>Cascade:</strong> When specificity is equal, last rule wins</li>
+                <li><strong>Classes are best:</strong> Use classes for styling, IDs for JavaScript</li>
+                <li><strong>Units matter:</strong> px for precision, rem for consistency, % for responsiveness</li>
+                <li><strong>Avoid !important:</strong> Use it only when absolutely necessary</li>
+                <li><strong>DevTools:</strong> Use browser inspector to see which rules are applied</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        function applyStyle(className) {
+            const element = document.getElementById('targetElement');
+            // Remove all style classes first
+            element.className = 'target-element';
+            // Add the new class
+            element.classList.add(className);
+        }
+        
+        function resetStyles() {
+            const element = document.getElementById('targetElement');
+            element.className = 'target-element';
+        }
+        
+        // Specificity Calculator
+        function calculateSpecificity(selector) {
+            let a = 0; // IDs
+            let b = 0; // Classes, attributes, pseudo-classes
+            let c = 0; // Elements and pseudo-elements
+            
+            // Count IDs
+            const idMatches = selector.match(/#[\w-]+/g);
+            if (idMatches) a = idMatches.length;
+            
+            // Count classes, attributes, pseudo-classes
+            const classMatches = selector.match(/\.[\w-]+|\[[\w-]+\]|:[\w-]+/g);
+            if (classMatches) b = classMatches.length;
+            
+            // Count elements and pseudo-elements
+            const elementMatches = selector.match(/\b[a-z]+\b|::[\w-]+/g);
+            if (elementMatches) c = elementMatches.length;
+            
+            return `${a},${b},${c}`;
+        }
+        
+        function updateSpecificity() {
+            const selector = document.getElementById('selectorInput').value;
+            const specificity = calculateSpecificity(selector);
+            document.getElementById('specificityValue').textContent = specificity;
+        }
+        
+        // Unit Converter
+        function updateUnits() {
+            const baseFontSize = 16; // Default browser font size
+            const pixelInput = document.getElementById('pixelInput');
+            const remInput = document.getElementById('remInput');
+            const emInput = document.getElementById('emInput');
+            const preview = document.getElementById('unitPreview');
+            
+            // Get the active input
+            const activeElement = document.activeElement;
+            let newSize;
+            
+            if (activeElement === pixelInput) {
+                const px = parseFloat(pixelInput.value) || 16;
+                remInput.value = (px / baseFontSize).toFixed(2);
+                emInput.value = (px / baseFontSize).toFixed(2);
+                newSize = px;
+            } else if (activeElement === remInput) {
+                const rem = parseFloat(remInput.value) || 1;
+                const px = rem * baseFontSize;
+                pixelInput.value = px.toFixed(0);
+                emInput.value = rem.toFixed(2);
+                newSize = px;
+            } else if (activeElement === emInput) {
+                const em = parseFloat(emInput.value) || 1;
+                const px = em * baseFontSize;
+                pixelInput.value = px.toFixed(0);
+                remInput.value = em.toFixed(2);
+                newSize = px;
+            }
+            
+            if (newSize) {
+                preview.style.fontSize = newSize + 'px';
+            }
+        }
+        
+        // Initialize unit converter
+        document.addEventListener('DOMContentLoaded', function() {
+            updateSpecificity();
+            document.getElementById('selectorInput').addEventListener('input', updateSpecificity);
+            
+            // Add unit converter listeners
+            const unitInputs = ['pixelInput', 'remInput', 'emInput'];
+            unitInputs.forEach(id => {
+                document.getElementById(id).addEventListener('input', updateUnits);
+            });
+        });
+    </script>
+</body>
+</html>
