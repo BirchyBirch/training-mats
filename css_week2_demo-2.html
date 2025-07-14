@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Box Model & Box-Sizing - Week 2</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        /* Combinator examples - properly scoped to avoid any conflicts */
+        .combinator-demo {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            margin: 1rem 0;
+        }
+        
+        .combinator-demo .demo-card {
+            background-color: white;
+            border: 2px solid #007bff;
+            border-radius: 0.25rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .combinator-demo .demo-card .card-header {
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 0.5rem;
+        }
+        
+        .combinator-demo .demo-card .card-content {
+            margin-top: 0.75rem;
+        }
+        
+        .combinator-demo .demo-card .card-content p {
+            color: #6c757d;
+            margin: 0.5rem 0;
+            font-style: italic;
+        }
+        
+        .combinator-demo .demo-card .nested-content {
+            margin-left: 1rem;
+            padding-left: 0.75rem;
+            border-left: 3px solid #28a745;
+            margin-top: 0.5rem;
+            background-color: #f8f9fa;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        
+        .combinator-demo .demo-card .nested-content p {
+            color: #28a745;
+            font-size: 0.9rem;
+            margin: 0.25rem 0;
+            font-weight: bold;
+        }
+        
+        .combinator-demo .sibling-examples {
+            background-color: white;
+            border: 2px solid #ffc107;
+            border-radius: 0.25rem;
+            padding: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .combinator-demo .sibling-examples .demo-heading {
+            color: #007bff;
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        
+        .combinator-demo .sibling-examples .demo-heading + .demo-paragraph {
+            margin-top: 0;
+            font-weight: bold;
+            color: #007bff;
+            background-color: #e3f2fd;
+            padding: 0.5rem;
+            border-radius: 3px;
+            border-left: 4px solid #007bff;
+        }
+        
+        .combinator-demo .sibling-examples .demo-heading ~ .demo-paragraph {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin: 0.5rem 0;
+            padding: 0.25rem;
+            background-color: #f8f9fa;
+        }
+        
+        .combinator-demo .sibling-examples .other-content {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background-color: #fff3cd;
+            border-radius: 3px;
+            font-style: italic;
+            color: #856404;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+        }
+        
+        .section h2 {
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        /* Box Model Visual Examples */
+        .box-model-demo {
+            display: flex;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .box-example {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+        }
+        
+        .box1 {
+            width: 200px;
+            height: 100px;
+            background-color: #3498db;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            border: 8px solid #2980b9;
+            padding: 16px;
+            font-weight: bold;
+        }
+        
+        .box2 {
+            width: 200px;
+            height: 100px;
+            background-color: #e74c3c;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px auto 25px auto;
+            border: 4px solid #c0392b;
+            padding: 12px 24px;
+            font-weight: bold;
+        }
+        
+        .box3 {
+            width: 200px;
+            height: 100px;
+            background-color: #27ae60;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px auto 30px auto;
+            border: 2px solid #229954;
+            padding: 8px 32px;
+            font-weight: bold;
+        }
+        
+        /* Box-sizing comparison */
+        .box-sizing-demo {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .content-box {
+            box-sizing: content-box;
+            width: 200px;
+            padding: 20px;
+            border: 10px solid #3498db;
+            background-color: #ecf0f1;
+            margin: 10px;
+        }
+        
+        .border-box {
+            box-sizing: border-box;
+            width: 200px;
+            padding: 20px;
+            border: 10px solid #e74c3c;
+            background-color: #ecf0f1;
+            margin: 10px;
+        }
+        
+        /* Angular component examples */
+        .angular-example {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 4px solid #007bff;
+        }
+        
+        .component-card {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 0.25rem;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        
+        .component-card-bad {
+            /* Common mistake: inconsistent spacing */
+            padding: 8px 12px 6px 15px;
+            margin: 3px 0px 7px 2px;
+            border: 2px solid #ccc;
+        }
+        
+        .component-card-good {
+            /* Better: consistent spacing scale */
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border: 1px solid #dee2e6;
+        }
+        
+        /* Interactive debugging examples */
+        .debug-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .broken-layout {
+            display: flex;
+            gap: 10px;
+            background-color: #ffebee;
+            padding: 15px;
+            border: 1px solid #f44336;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        
+        .broken-box {
+            width: 100px;
+            height: 60px;
+            background-color: #ff5722;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Problem: mixing box-sizing models */
+            box-sizing: content-box;
+            padding: 10px;
+            border: 5px solid #d84315;
+        }
+        
+        .fixed-layout {
+            display: flex;
+            gap: 10px;
+            background-color: #e8f5e8;
+            padding: 15px;
+            border: 1px solid #4caf50;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        
+        .fixed-box {
+            width: 100px;
+            height: 60px;
+            background-color: #4caf50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Fixed: consistent box-sizing */
+            box-sizing: border-box;
+            padding: 10px;
+            border: 5px solid #388e3c;
+        }
+        
+        /* Code examples */
+        .code-example {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        
+        .code-example .comment {
+            color: #68d391;
+            font-style: italic;
+        }
+        
+        .code-example .property {
+            color: #63b3ed;
+        }
+        
+        .code-example .value {
+            color: #fbb6ce;
+        }
+        
+        .code-example .selector {
+            color: #f6e05e;
+        }
+        
+        /* Interactive controls */
+        .controls {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .controls label {
+            display: block;
+            margin: 10px 0 5px 0;
+            font-weight: bold;
+        }
+        
+        .controls input[type="range"] {
+            width: 200px;
+            margin-right: 10px;
+        }
+        
+        .controls input[type="checkbox"] {
+            margin-right: 8px;
+        }
+        
+        /* Dynamic demo box */
+        .demo-box {
+            width: 200px;
+            height: 100px;
+            background-color: #9b59b6;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        /* Calculation display */
+        .calculation {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid #2196f3;
+        }
+        
+        /* Spacing scale examples */
+        .spacing-scale {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .spacing-example {
+            background-color: #007bff;
+            color: white;
+            margin: 8px 0;
+            padding: 8px;
+            text-align: center;
+            border-radius: 3px;
+        }
+        
+        .spacing-4 { padding: 4px; margin: 4px 0; }
+        .spacing-8 { padding: 8px; margin: 8px 0; }
+        .spacing-12 { padding: 12px; margin: 12px 0; }
+        .spacing-16 { padding: 16px; margin: 16px 0; }
+        .spacing-20 { padding: 20px; margin: 20px 0; }
+        .spacing-24 { padding: 24px; margin: 24px 0; }
+        .spacing-32 { padding: 32px; margin: 32px 0; }
+        
+        /* DevTools guide */
+        .devtools-guide {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .devtools-guide h4 {
+            margin-top: 0;
+            color: #856404;
+        }
+        
+        /* Real problem examples */
+        .problem-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .problem-bad, .problem-good {
+            padding: 15px;
+            border-radius: 5px;
+        }
+        
+        .problem-bad {
+            background-color: #ffebee;
+            border: 1px solid #f44336;
+        }
+        
+        .problem-good {
+            background-color: #e8f5e8;
+            border: 1px solid #4caf50;
+        }
+        
+        .spec-reference {
+            background-color: #e8f4f8;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .spec-reference a {
+            color: #17a2b8;
+            text-decoration: none;
+        }
+        
+        .spec-reference a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CSS Box Model & Box-Sizing - Week 2</h1>
+        
+        <div class="section">
+            <h2>1. CSS Combinators - Targeting Related Elements</h2>
+            <p>Building on Week 1's selectors, combinators let you target elements based on their relationship to other elements. This is essential for component styling in Angular.</p>
+            
+            <div class="code-example">
+<span class="comment">/* Descendant combinator (space) - any nested element */</span>
+<span class="selector">.card p</span> { <span class="property">color</span>: <span class="value">gray</span>; }
+
+<span class="comment">/* Child combinator (>) - direct children only */</span>
+<span class="selector">.card > .header</span> { <span class="property">font-weight</span>: <span class="value">bold</span>; }
+
+<span class="comment">/* Adjacent sibling (+) - immediately following sibling */</span>
+<span class="selector">h2 + p</span> { <span class="property">margin-top</span>: <span class="value">0</span>; }
+
+<span class="comment">/* General sibling (~) - any following sibling */</span>
+<span class="selector">h2 ~ p</span> { <span class="property">font-size</span>: <span class="value">0.9rem</span>; }
+            </div>
+            
+            <div class="combinator-demo">
+                <div class="demo-card">
+                    <div class="card-header">Card Header (direct child of .demo-card)</div>
+                    <div class="card-content">
+                        <p>This paragraph is inside .card-content, which is inside .demo-card (descendant)</p>
+                        <div class="nested-content">
+                            <p>This paragraph is deeply nested but still a descendant of .demo-card</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sibling-examples">
+                    <div class="demo-heading">Section Heading</div>
+                    <div class="demo-paragraph">This paragraph immediately follows the heading (adjacent sibling)</div>
+                    <div class="demo-paragraph">This paragraph also follows the heading but not immediately (general sibling)</div>
+                    <div class="other-content">Some other content in between</div>
+                    <div class="demo-paragraph">This paragraph still follows the heading (general sibling)</div>
+                </div>
+            </div>
+            
+            <div class="angular-example">
+                <h4>🅰️ Angular Component Combinators</h4>
+                <div class="code-example">
+<span class="comment">/* component.scss - scoped to this component */</span>
+<span class="selector">:host</span> {
+  <span class="property">display</span>: <span class="value">block</span>;
+}
+
+<span class="comment">/* Target direct child buttons only */</span>
+<span class="selector">:host > button</span> {
+  <span class="property">margin-right</span>: <span class="value">0.5rem</span>;
+}
+
+<span class="comment">/* Target any descendant with .error class */</span>
+<span class="selector">:host .error</span> {
+  <span class="property">color</span>: <span class="value">red</span>;
+}
+
+<span class="comment">/* Target Angular Material components within this component */</span>
+<span class="selector">:host mat-form-field + mat-form-field</span> {
+  <span class="property">margin-top</span>: <span class="value">1rem</span>;
+}
+
+<span class="comment">/* Target elements after specific Angular components */</span>
+<span class="selector">:host mat-card ~ .actions</span> {
+  <span class="property">margin-top</span>: <span class="value">1.5rem</span>;
+}
+                </div>
+                <p><strong>ViewEncapsulation Context:</strong> These combinators work within the component's template. With ViewEncapsulation.Emulated, they won't affect other components, making them safe for component-specific styling.</p>
+            </div>
+            
+            <div class="spec-reference">
+                <h4>📚 Combinator Specificity</h4>
+                <p><strong>Important:</strong> Combinators themselves don't add to specificity, but each selector in the combination does.</p>
+                <div class="code-example">
+<span class="comment">/* Specificity: 0,0,2,0 (two classes) */</span>
+<span class="selector">.card .header</span> { }
+
+<span class="comment">/* Specificity: 0,0,2,0 (two classes, > doesn't count) */</span>
+<span class="selector">.card > .header</span> { }
+
+<span class="comment">/* Specificity: 0,0,1,1 (one class + one element) */</span>
+<span class="selector">.card p</span> { }
+
+<span class="comment">/* Specificity: 0,0,0,2 (two elements) */</span>
+<span class="selector">h2 + p</span> { }
+                </div>
+                <p><strong>Reference:</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors" target="_blank">MDN CSS Selectors</a></p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>2. Box Model Fundamentals</h2>
+            <p>Every HTML element is a rectangular box with four distinct areas. Understanding this is crucial for Angular component styling.</p>
+            
+            <div class="box-model-demo">
+                <div class="box-example">
+                    <div class="box1">Content Area</div>
+                    <p><strong>Box 1:</strong><br>
+                    width: 200px<br>
+                    padding: 16px<br>
+                    border: 8px<br>
+                    margin: 20px<br>
+                    <strong>Total: 264px wide</strong></p>
+                </div>
+                
+                <div class="box-example">
+                    <div class="box2">Content Area</div>
+                    <p><strong>Box 2:</strong><br>
+                    width: 200px<br>
+                    padding: 12px 24px<br>
+                    border: 4px<br>
+                    margin: 15px auto 25px<br>
+                    <strong>Total: 256px wide</strong></p>
+                </div>
+                
+                <div class="box-example">
+                    <div class="box3">Content Area</div>
+                    <p><strong>Box 3:</strong><br>
+                    width: 200px<br>
+                    padding: 8px 32px<br>
+                    border: 2px<br>
+                    margin: 10px auto 30px<br>
+                    <strong>Total: 268px wide</strong></p>
+                </div>
+            </div>
+            
+            <div class="calculation">
+<strong>Box Model Calculation:</strong>
+Total Width = content width + padding-left + padding-right + border-left + border-right + margin-left + margin-right
+
+Total Height = content height + padding-top + padding-bottom + border-top + border-bottom + margin-top + margin-bottom
+            </div>
+            
+            <div class="spec-reference">
+                <h4>📚 Official Specification</h4>
+                <p><strong>CSS Box Model:</strong> <a href="https://www.w3.org/TR/CSS2/box.html" target="_blank">W3C CSS 2.1 Specification - Box Model</a></p>
+                <p><strong>MDN Reference:</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_box_model" target="_blank">Introduction to the CSS Box Model</a></p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>2. Box-Sizing: Modern Standard</h2>
+            <p>Modern web development uses <code>box-sizing: border-box</code> as the standard. This means width and height include content, padding, and border.</p>
+            
+            <div class="code-example">
+<span class="comment">/* Modern standard - width includes padding and border */</span>
+<span class="selector">.component</span> {
+  <span class="property">box-sizing</span>: <span class="value">border-box</span>;
+  <span class="property">width</span>: <span class="value">300px</span>;
+  <span class="property">padding</span>: <span class="value">20px</span>;
+  <span class="property">border</span>: <span class="value">2px solid #ccc</span>;
+  <span class="comment">/* Total width is exactly 300px */</span>
+}
+            </div>
+            
+            <div class="angular-example">
+                <h4>🅰️ Angular Application Setup</h4>
+                <div class="code-example">
+<span class="comment">/* Global styles.css - set once for entire application */</span>
+<span class="selector">*, *::before, *::after</span> {
+  <span class="property">box-sizing</span>: <span class="value">border-box</span>;
+}
+
+<span class="comment">/* Angular Material components expect this behavior */</span>
+<span class="comment">/* CDK Layout utilities are designed around border-box */</span>
+                </div>
+                <p><strong>Why this matters:</strong> Angular Material, CDK Layout, and modern CSS frameworks all assume border-box sizing. Setting this globally ensures consistent behavior across your entire application.</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>3. Interactive Box Model Demo</h2>
+            <p>Use the controls below to see how different values affect the total element size. Right-click and inspect the demo box to see the box model in DevTools.</p>
+            
+            <div class="demo-box" id="demoBox">
+                Inspect Me!
+            </div>
+            
+            <div class="controls">
+                <label>Content Width: <span id="widthValue">200px</span></label>
+                <input type="range" id="widthSlider" min="100" max="300" value="200">
+                
+                <label>Padding: <span id="paddingValue">20px</span></label>
+                <input type="range" id="paddingSlider" min="0" max="50" value="20">
+                
+                <label>Border: <span id="borderValue">5px</span></label>
+                <input type="range" id="borderSlider" min="0" max="20" value="5">
+                
+                <label>Margin: <span id="marginValue">20px</span></label>
+                <input type="range" id="marginSlider" min="0" max="50" value="20">
+            </div>
+            
+            <div class="calculation" id="calculationDisplay">
+                With border-box: Total Width = 200px (padding and border included in width)
+            </div>
+            
+            <div class="devtools-guide">
+                <h4>🔧 DevTools Exercise</h4>
+                <ol>
+                    <li>Right-click the demo box above and select "Inspect Element"</li>
+                    <li>In the Elements panel, find the Computed tab</li>
+                    <li>Scroll down to see the box model diagram</li>
+                    <li>Adjust the sliders and watch the diagram update</li>
+                    <li>Toggle border-box and see how the calculation changes</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>4. Common Spacing Problems in Angular Apps</h2>
+            <p>Here are real-world examples of spacing issues you'll encounter in Angular component development:</p>
+            
+            <div class="problem-showcase">
+                <div class="problem-bad">
+                    <h4>❌ Inconsistent Spacing</h4>
+                    <div class="component-card-bad">
+                        Random spacing values make components look unprofessional
+                    </div>
+                    <div class="code-example">
+<span class="comment">/* Bad: Random values */</span>
+<span class="selector">.card</span> {
+  <span class="property">padding</span>: <span class="value">8px 12px 6px 15px</span>;
+  <span class="property">margin</span>: <span class="value">3px 0px 7px 2px</span>;
+}
+                    </div>
+                </div>
+                
+                <div class="problem-good">
+                    <h4>✅ Consistent Spacing Scale</h4>
+                    <div class="component-card-good">
+                        Consistent spacing creates visual harmony and professionalism
+                    </div>
+                    <div class="code-example">
+<span class="comment">/* Good: Consistent scale */</span>
+<span class="selector">.card</span> {
+  <span class="property">padding</span>: <span class="value">1rem</span>; <span class="comment">/* 16px */</span>
+  <span class="property">margin</span>: <span class="value">0.5rem 0</span>; <span class="comment">/* 8px top/bottom */</span>
+}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="spacing-scale">
+                <h4>Recommended Spacing Scale</h4>
+                <div class="spacing-example spacing-4">4px - Tiny adjustments</div>
+                <div class="spacing-example spacing-8">8px - Small spacing</div>
+                <div class="spacing-example spacing-12">12px - Form elements</div>
+                <div class="spacing-example spacing-16">16px - Standard spacing</div>
+                <div class="spacing-example spacing-20">20px - Section spacing</div>
+                <div class="spacing-example spacing-24">24px - Card padding</div>
+                <div class="spacing-example spacing-32">32px - Large section breaks</div>
+            </div>
+            
+            <div class="angular-example">
+                <h4>🅰️ Angular Component Architecture Considerations</h4>
+                <div class="code-example">
+<span class="comment">/* component.scss - ViewEncapsulation.Emulated (default) */</span>
+<span class="selector">:host</span> {
+  <span class="property">display</span>: <span class="value">block</span>;
+  <span class="property">box-sizing</span>: <span class="value">border-box</span>;
+  <span class="property">padding</span>: <span class="value">var(--spacing-md)</span>;
+}
+
+<span class="comment">/* Angular Material components use border-box */</span>
+<span class="comment">/* Your custom components should match this behavior */</span>
+<span class="selector">.content-wrapper</span> {
+  <span class="property">width</span>: <span class="value">100%</span>;
+  <span class="property">padding</span>: <span class="value">1rem</span>;
+  <span class="property">border</span>: <span class="value">1px solid #ccc</span>;
+  <span class="comment">/* With border-box: predictable 100% width */</span>
+  <span class="comment">/* Without border-box: width becomes 100% + 2rem + 2px */</span>
+}
+
+<span class="comment">/* CSS Custom Properties for consistent spacing */</span>
+<span class="selector">:host</span> {
+  <span class="property">--component-padding</span>: <span class="value">1rem</span>;
+  <span class="property">--component-gap</span>: <span class="value">0.5rem</span>;
+}
+                </div>
+                <p><strong>Angular Integration:</strong> Angular Material components assume border-box sizing. When building custom components, matching this behavior ensures consistent integration with Material components and predictable responsive behavior.</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>5. Box Model Debugging Scenarios</h2>
+            <p>Practice identifying and fixing common box model issues:</p>
+            
+            <div class="debug-container">
+                <h4>Scenario 1: Understanding Element Dimensions</h4>
+                <div class="fixed-layout">
+                    <div class="fixed-box">300px</div>
+                    <div class="fixed-box">300px</div>
+                    <div class="fixed-box">300px</div>
+                </div>
+                <p><strong>Modern Approach:</strong> With border-box sizing, these elements are exactly 300px wide, including their padding and borders.</p>
+                
+                <div class="code-example">
+<span class="comment">/* Standard modern CSS - border-box assumed */</span>
+<span class="selector">.component</span> {
+  <span class="property">width</span>: <span class="value">300px</span>;
+  <span class="property">padding</span>: <span class="value">10px</span>;
+  <span class="property">border</span>: <span class="value">5px solid #388e3c</span>;
+  <span class="comment">/* Total width: exactly 300px */</span>
+  <span class="comment">/* Content area: 300px - 20px padding - 10px border = 270px */</span>
+}
+                </div>
+            </div>
+            
+            <div class="angular-example">
+                <h4>🅰️ Angular Responsive Design & Box Model</h4>
+                <div class="code-example">
+<span class="comment">/* component.scss */</span>
+<span class="selector">:host</span> {
+  <span class="property">display</span>: <span class="value">block</span>;
+  <span class="property">box-sizing</span>: <span class="value">border-box</span>;
+}
+
+<span class="comment">/* Grid layout that breaks without border-box */</span>
+<span class="selector">.grid-container</span> {
+  <span class="property">display</span>: <span class="value">grid</span>;
+  <span class="property">grid-template-columns</span>: <span class="value">repeat(auto-fit, minmax(300px, 1fr))</span>;
+  <span class="property">gap</span>: <span class="value">1rem</span>;
+}
+
+<span class="selector">.grid-item</span> {
+  <span class="property">padding</span>: <span class="value">1rem</span>;
+  <span class="property">border</span>: <span class="value">1px solid #ccc</span>;
+  <span class="comment">/* Without border-box: items overflow grid container */</span>
+  <span class="comment">/* With border-box: perfect fit within grid constraints */</span>
+}
+
+<span class="comment">/* Angular CDK Layout for responsive breakpoints */</span>
+<span class="selector">.content</span> {
+  <span class="property">padding</span>: <span class="value">1rem</span>;
+}
+
+<span class="selector">@media (min-width: 768px)</span> {
+  <span class="selector">.content</span> {
+    <span class="property">padding</span>: <span class="value">2rem</span>;
+    <span class="comment">/* border-box ensures predictable sizing across breakpoints */</span>
+  }
+}
+                </div>
+                <p><strong>CDK Integration:</strong> Angular CDK's Layout module provides breakpoint observers. When combined with border-box sizing, responsive components maintain predictable dimensions across all screen sizes without calculation overhead.</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>6. Advanced Box Model Concepts</h2>
+            
+            <div class="problem-showcase">
+                <div class="problem-bad">
+                    <h4>⚠️ Margin Collapsing</h4>
+                    <div class="code-example">
+<span class="selector">.top-element</span> {
+  <span class="property">margin-bottom</span>: <span class="value">20px</span>;
+}
+
+<span class="selector">.bottom-element</span> {
+  <span class="property">margin-top</span>: <span class="value">30px</span>;
+}
+
+<span class="comment">/* Actual gap: 30px (not 50px!) */</span>
+<span class="comment">/* Margins collapse to the larger value */</span>
+                    </div>
+                </div>
+                
+                <div class="problem-good">
+                    <h4>✅ Preventing Margin Collapse</h4>
+                    <div class="code-example">
+<span class="comment">/* Use padding instead of margin */</span>
+<span class="selector">.container</span> {
+  <span class="property">padding</span>: <span class="value">20px 0</span>;
+}
+
+<span class="comment">/* Or use flexbox (prevents collapsing) */</span>
+<span class="selector">.flex-container</span> {
+  <span class="property">display</span>: <span class="value">flex</span>;
+  <span class="property">flex-direction</span>: <span class="value">column</span>;
+  <span class="property">gap</span>: <span class="value">20px</span>;
+}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="spec-reference">
+                <h4>📚 Deep Dive Resources</h4>
+                <p><strong>Box-sizing:</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing" target="_blank">MDN box-sizing Property</a></p>
+                <p><strong>Margin Collapsing:</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing" target="_blank">MDN Mastering Margin Collapsing</a></p>
+                <p><strong>CSS Box Model:</strong> <a href="https://web.dev/learn/css/box-model/" target="_blank">web.dev Box Model Guide</a></p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>7. Key Takeaways & Best Practices</h2>
+            <ul>
+                <li><strong>Always use border-box:</strong> Makes width/height calculations predictable</li>
+                <li><strong>Consistent spacing scale:</strong> Use 4px, 8px, 16px, 24px, 32px values</li>
+                <li><strong>DevTools box model:</strong> Your best friend for debugging layout issues</li>
+                <li><strong>Angular components:</strong> Set box-sizing on :host for component consistency</li>
+                <li><strong>Margin collapsing:</strong> Understand when vertical margins merge</li>
+                <li><strong>rem for spacing:</strong> Scales consistently across different font sizes</li>
+                <li><strong>Visual inspection:</strong> Always check the computed box model, not just your CSS</li>
+            </ul>
+            
+            <div class="angular-example">
+                <h4>🅰️ Angular Component Template</h4>
+                <div class="code-example">
+<span class="comment">/* component.scss */</span>
+<span class="selector">:host</span> {
+  <span class="property">display</span>: <span class="value">block</span>;
+  <span class="property">box-sizing</span>: <span class="value">border-box</span>;
+  <span class="property">padding</span>: <span class="value">1rem</span>;
+}
+
+<span class="selector">.content</span> {
+  <span class="property">margin-bottom</span>: <span class="value">1rem</span>;
+  <span class="property">padding</span>: <span class="value">0.75rem</span>;
+  <span class="property">border</span>: <span class="value">1px solid #dee2e6</span>;
+  <span class="property">border-radius</span>: <span class="value">0.25rem</span>;
+}
+
+<span class="selector">.actions</span> {
+  <span class="property">display</span>: <span class="value">flex</span>;
+  <span class="property">gap</span>: <span class="value">0.5rem</span>;
+  <span class="property">margin-top</span>: <span class="value">1rem</span>;
+}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Interactive demo controls
+        const demoBox = document.getElementById('demoBox');
+        const widthSlider = document.getElementById('widthSlider');
+        const paddingSlider = document.getElementById('paddingSlider');
+        const borderSlider = document.getElementById('borderSlider');
+        const marginSlider = document.getElementById('marginSlider');
+        
+        const widthValue = document.getElementById('widthValue');
+        const paddingValue = document.getElementById('paddingValue');
+        const borderValue = document.getElementById('borderValue');
+        const marginValue = document.getElementById('marginValue');
+        const calculationDisplay = document.getElementById('calculationDisplay');
+        
+        function updateBoxModel() {
+            const width = parseInt(widthSlider.value);
+            const padding = parseInt(paddingSlider.value);
+            const border = parseInt(borderSlider.value);
+            const margin = parseInt(marginSlider.value);
+            
+            // Update display values
+            widthValue.textContent = width + 'px';
+            paddingValue.textContent = padding + 'px';
+            borderValue.textContent = border + 'px';
+            marginValue.textContent = margin + 'px';
+            
+            // Apply styles to demo box (always border-box)
+            demoBox.style.width = width + 'px';
+            demoBox.style.padding = padding + 'px';
+            demoBox.style.borderWidth = border + 'px';
+            demoBox.style.margin = margin + 'px auto';
+            demoBox.style.boxSizing = 'border-box';
+            
+            // Calculate content area
+            const contentWidth = width - (padding * 2) - (border * 2);
+            calculationDisplay.innerHTML = `
+                <strong>Border-box calculation:</strong><br>
+                Total Width: ${width}px (specified width)<br>
+                Content Area: ${contentWidth}px (${width}px - ${padding * 2}px padding - ${border * 2}px border)<br>
+                Margin: ${margin}px (outside the element, doesn't affect total width)
+            `;
+        }
+        
+        // Add event listeners (removed box-sizing toggle)
+        widthSlider.addEventListener('input', updateBoxModel);
+        paddingSlider.addEventListener('input', updateBoxModel);
+        borderSlider.addEventListener('input', updateBoxModel);
+        marginSlider.addEventListener('input', updateBoxModel);
+        
+        // Initialize
+        updateBoxModel();
+    </script>
+</body>
+</html>
